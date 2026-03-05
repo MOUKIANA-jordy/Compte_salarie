@@ -31,7 +31,7 @@ export default function ResetPasswordScreen() {
       />
 
       <TextInput
-        placeholder="Confirmer mot de passe"
+        placeholder="Confirmer le mot de passe"
         secureTextEntry
         style={styles.input}
         value={confirmPassword}

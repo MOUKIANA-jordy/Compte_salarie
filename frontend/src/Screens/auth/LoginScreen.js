@@ -1,95 +1,76 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
-import Header from "../components/Header";
-import Input from "../components/Input";
-import Button from "../components/Button";
+import { View, StyleSheet, Alert } from "react-native";
+import Header from "../Components/Header";
+import Input from "../Components/Input";
+import Button from "../Components/Button";
+import { api } from "../api/axios";
 
 export default function LoginScreen({ navigation }) {
-
   const [identifiant, setIdentifiant] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    console.log("Identifiant :", identifiant);
-    console.log("Password :", password);
+  const handleLogin = async () => {
+    if (!identifiant || !password) {
+      Alert.alert("Erreur", "Veuillez remplir tous les champs.");
+      return;
+    }
+
+    try {
+      const response = await api.post("token/", {
+        username: identifiant, // ton matricule côté backend
+        password: password,
+      });
+
+      const { access, refresh } = response.data;
+
+      console.log("Access Token :", access);
+      console.log("Refresh Token :", refresh);
+
+      // Ici tu peux stocker le token dans AsyncStorage
+      // AsyncStorage.setItem("access_token", access);
+
+      Alert.alert("Succès", "Connexion réussie !");
+      // navigation.navigate("Home"); // redirection après login
+
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+      Alert.alert("Erreur", "Identifiant ou mot de passe incorrect");
+    }
   };
 
   return (
     <View style={styles.container}>
+      <Header title="StaffHub" />
 
-      <Text style={styles.title}>StaffHub</Text>
-
-      <TextInput
-        placeholder="Identifiant (matricule)"
-        style={styles.input}
+      <Input
+        placeholder="Identifiant"
         value={identifiant}
         onChangeText={setIdentifiant}
       />
 
-      <TextInput
+      <Input
         placeholder="Mot de passe"
-        style={styles.input}
-        secureTextEntry
         value={password}
         onChangeText={setPassword}
+        secureTextEntry
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Se connecter</Text>
-      </TouchableOpacity>
+      <Button title="Se connecter" onPress={handleLogin} />
 
-      <TouchableOpacity
+      <Button
+        title="Mot de passe oublié ?"
+        type="link"
         onPress={() => navigation.navigate("ForgotPassword")}
-      >
-        <Text style={styles.forgot}>
-          Mot de passe oublié ?
-        </Text>
-      </TouchableOpacity>
-
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-    justifyContent: "center",
     padding: 20,
-    backgroundColor: "#fff"
+    justifyContent: "center",
+    backgroundColor: "#fff",
   },
-
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 40
-  },
-
-  input: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 15
-  },
-
-  button: {
-    backgroundColor: "#2563eb",
-    padding: 15,
-    borderRadius: 8
-  },
-
-  buttonText: {
-    color: "white",
-    textAlign: "center",
-    fontWeight: "bold"
-  },
-
-  forgot: {
-    marginTop: 20,
-    textAlign: "center",
-    color: "#2563eb"
-  }
-
 });
