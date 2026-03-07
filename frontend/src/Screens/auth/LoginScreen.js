@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Alert } from "react-native";
-import Header from "../Components/Header";
-import Input from "../Components/Input";
-import Button from "../Components/Button";
-import { api } from "../api/axios";
+import Header from "../../Components/Header";
+import Input from "../../Components/Input";
+import Button from "../../Components/Button";
+import  api from "../../api/api";
 
 export default function LoginScreen({ navigation }) {
   const [identifiant, setIdentifiant] = useState("");

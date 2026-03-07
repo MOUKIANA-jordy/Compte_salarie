@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+
+import Header from "../../Components/Header";
+import Input from "../../Components/Input";
+import Button from "../../Components/Button";
 
 export default function ForgotPasswordScreen() {
 
@@ -12,26 +15,22 @@ export default function ForgotPasswordScreen() {
   return (
     <View style={styles.container}>
 
-      <Text style={styles.title}>
-        Mot de passe oublié
-      </Text>
+      <Header title="Mot de passe oublié" />
 
       <Text style={styles.text}>
         Entrez votre email professionnel
       </Text>
 
-      <TextInput
+      <Input
         placeholder="email@staffhub.com"
-        style={styles.input}
         value={email}
         onChangeText={setEmail}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleSend}>
-        <Text style={styles.buttonText}>
-          Envoyer le lien
-        </Text>
-      </TouchableOpacity>
+      <Button
+        title="Envoyer le lien"
+        onPress={handleSend}
+      />
 
     </View>
   );
@@ -41,40 +40,14 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
+    padding: 20,
     justifyContent: "center",
-    padding: 20
-  },
-
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center"
+    backgroundColor: "#fff"
   },
 
   text: {
     textAlign: "center",
     marginBottom: 20
-  },
-
-  input: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 20
-  },
-
-  button: {
-    backgroundColor: "#2563eb",
-    padding: 15,
-    borderRadius: 8
-  },
-
-  buttonText: {
-    color: "white",
-    textAlign: "center",
-    fontWeight: "bold"
   }
 
 });

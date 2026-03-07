@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+
+import Header from "../../Components/Header";
+import Input from "../../Components/Input";
+import Button from "../../Components/Button";
 
 export default function ResetPasswordScreen() {
 
@@ -7,8 +10,9 @@ export default function ResetPasswordScreen() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleReset = () => {
+
     if (password !== confirmPassword) {
-      alert("Les mots de passe ne correspondent pas");
+      Alert.alert("Erreur", "Les mots de passe ne correspondent pas");
       return;
     }
 
@@ -18,31 +22,26 @@ export default function ResetPasswordScreen() {
   return (
     <View style={styles.container}>
 
-      <Text style={styles.title}>
-        Nouveau mot de passe
-      </Text>
+      <Header title="Nouveau mot de passe" />
 
-      <TextInput
+      <Input
         placeholder="Nouveau mot de passe"
         secureTextEntry
-        style={styles.input}
         value={password}
         onChangeText={setPassword}
       />
 
-      <TextInput
+      <Input
         placeholder="Confirmer le mot de passe"
         secureTextEntry
-        style={styles.input}
         value={confirmPassword}
         onChangeText={setConfirmPassword}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleReset}>
-        <Text style={styles.buttonText}>
-          Modifier mot de passe
-        </Text>
-      </TouchableOpacity>
+      <Button
+        title="Modifier mot de passe"
+        onPress={handleReset}
+      />
 
     </View>
   );
@@ -52,35 +51,9 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
+    padding: 20,
     justifyContent: "center",
-    padding: 20
-  },
-
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 30
-  },
-
-  input: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 20
-  },
-
-  button: {
-    backgroundColor: "#2563eb",
-    padding: 15,
-    borderRadius: 8
-  },
-
-  buttonText: {
-    color: "white",
-    textAlign: "center",
-    fontWeight: "bold"
+    backgroundColor: "#fff"
   }
 
 });

@@ -12,7 +12,7 @@ function PointageScreen() {
 
   return (
     <div>
-      <h2>Pointage</h2>
+      <h2>Pointage Virtuel</h2>
       <ul>
         {pointages.map(p => (
           <li key={p.id}>
